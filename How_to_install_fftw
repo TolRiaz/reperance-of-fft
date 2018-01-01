@@ -1,0 +1,11 @@
+First, Download the .tar.gz file from www.fftw.org
+And then, Open the terminal
+# tar zxvf fftw-3.x.x.tar.gz
+# ./configure CC=g++--enable-openmp
+# make
+# make install
+
+check it
+/usr/local/lib/libfftw3
+
+https://youtu.be/3vDfmd7u1wU
