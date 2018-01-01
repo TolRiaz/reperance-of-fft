@@ -1,0 +1,134 @@
+[Discrete Fourier Transform]
+
+이것은 DTFT와 DFT 에 대한 Demo입니다.
+
+--------------------------------------------------------------
+
+이 프로그램에 사용된 버튼의 기능은 다음과 같습니다.
+
+ "Reset" : Demo프로그램을 처음부터 시작합니다.
+
+ "Start"  : Demo프로그램을 시작합니다.
+
+ "Next " : 다음 Slide로 진행합니다.
+
+ "Stop"  : Demo프로그램을 중지합니다.
+
+ "Autoplay" : Demo프로그램의 진행을 자동적으로 수행합니다.
+
+ "Close" : Sitemap으로 이동합니다.
+
+--------------------------------------------------------------
+
+[DTFT와 DFT]
+
+DTFT 란 LTI (Linear Time-Invariant) 시스템일 때 복소지수수열을 이용하여 이산신호를 표시하는 방법을 말합니다. DTFT를 이용하면 정현파 정상상태 응답의 계산을 쉽게 할 수 있습니다. 하지만 DTFT가 존재하지 않는 신호가 존재하고, 초기조건이나 변하는 입력으로 인한 시스템의 과도응답 등은 DTFT로 접근계산할 수 없는 단점이 있습니다. 이런 단점으로 인해 DTFT의 확장개념으로 나타난 것으로 z-변환이 있습니다. 이산신호에 대한 DTFT가 주파수영역에서 연속이므로 DTFT를 수치적으로 계산하는 기법을 제공하는 방법으로 등장한 것이 DFT 입니다. DFT는 유일하게 시간영역, 주파수영역 모두 이산신호입니다. 그러나 수열의 길이 N이 클 때는 계산이 비효율적으로 이루어지므로 보다 빠른 계산을 위해 등장한 것이 FFT 입니다.
+
+이 데모는 이산신호 {1, 1, 1, 1} 에 대한 DTFT와 N-point DFT에 대한 예입니다.
+
+The program source:
+
+%===================================================
+% DTFT와 DFT 에 관한 프로그램입니다.
+% File name : ex_dft.m
+% Date : 2008. 1.11. 
+% Professor : Keun-Sung Bae
+% Lecture : Signals and Systems
+% Programming By Kwang-Hyun Cho in MIR Lab
+% Reference : Digital Signal Processing using MATLAB
+%             By Vinay K.Ingle, John G. Proakis
+% 필요파일 : DFT.m
+%===================================================
+
+clc; clear all; close all;
+
+% 원래신호
+x = [1 1 1 1];
+figure
+stem([0 1 2 3],x);
+title('Original Signal');
+xlabel('n'); grid;
+
+% DTFT using freqz.m
+
+w = [0:1:500]*2*pi/500;
+[H] = freqz(x,1,w);
+magH = abs(H); phaH = angle(H); phaH(126)=-47.5841*pi/180;
+
+figure
+
+subplot(211)
+plot(w/pi,magH); grid
+xlabel('frequency in pi units');
+ylabel('|X|'); title('Magnitude of the DTFT')
+
+subplot(212)
+plot(w/pi,phaH/pi*180); grid;
+xlabel('frequency in pi units');
+ylabel('Degrees'); title('Angle of the DTFT')
+
+% 4-Point DFT
+
+N = 4; w1 = 2*pi/N; k = 0:N-1;
+X = dft(x,N);
+magX = abs(X); phaX = angle(X)*180/pi;
+
+figure
+
+subplot(211)
+plot(w*N/(2*pi),magH,'--'); 
+axis([-0.1,4.1,-1,5]); hold on
+stem(k,magX); xlabel('k');
+ylabel('|X(k)|'); title('Magnitude of the DFT: N=4')
+hold off
+
+subplot(212)
+plot(w*N/(2*pi),phaH*180/pi,'--');
+axis([-0.1,4.1,-200,200]); hold on
+stem(k,phaX); xlabel('k');
+ylabel('Degrees'); title('Angle of the DFT: N=4')
+
+% 8-Point DFT
+
+N = 8; w1 = 2*pi/N; k = 0:N-1;
+x = [x, zeros(1,4)];
+X = dft(x,N);
+magX = abs(X); phaX = angle(X)*180/pi;
+
+figure
+
+subplot(211)
+plot(w*N/(2*pi),magH,'--'); 
+axis([-0.1,8.1,-1,5]); hold on
+stem(k,magX); xlabel('k');
+ylabel('|X(k)|'); title('Magnitude of the DFT: N=8')
+hold off
+
+subplot(212)
+plot(w*N/(2*pi),phaH*180/pi,'--');
+axis([-0.1,8.1,-200,200]); hold on
+stem(k,phaX); xlabel('k');
+ylabel('Degrees'); title('Angle of the DFT: N=8');
+
+% 16-Point DFT
+
+N = 16; w1 = 2*pi/N; k = 0:N-1;
+x = [x, zeros(1,8)];
+X = dft(x,N);
+magX = abs(X); phaX = angle(X)*180/pi;
+
+figure
+
+subplot(211)
+plot(w*N/(2*pi),magH,'--'); 
+axis([-0.1,16.1,-1,5]); hold on
+stem(k,magX); xlabel('k');
+ylabel('|X(k)|'); title('Magnitude of the DFT: N=16')
+hold off
+
+subplot(212)
+plot(w*N/(2*pi),phaH*180/pi,'--');
+axis([-0.1,16.1,-200,200]); hold on
+stem(k,phaX); xlabel('k');
+ylabel('Degrees'); title('Angle of the DFT: N=16')
+
