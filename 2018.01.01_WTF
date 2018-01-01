@@ -1,0 +1,10 @@
+WTF?
+
+What is the FFT?
+FFT is the Fast Fourier Transformation.
+Actually, FFT is optimized algorithm for implement of DFT(Discrete Fourier Transformation) 
+
+https://github.com/alltom/taps/blob/master/src/peaksfft/fft.c
+(fft for .wav file)
+
+
