@@ -1,0 +1,11 @@
+https://userpages.umbc.edu/~squire/cs455_l18.html
+
+ Lecture 18, FFT Fast Fourier Transform
+
+
+A basic Fourier transform can convert a function in the time domain
+to a function in the frequency domain. For example, consider a sound
+wave where the amplitude is varying with time. We can use a discrete
+Fourier transform on the sound wave and get the frequency spectrum.
+
+It has a lot of the Data.
